@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Domingo_Roof_WorksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="PostalCode" Type="char" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobCardID" />
+          </Key>
+          <Property Name="JobCardID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="JobTypeID" Type="int" Nullable="false" />
+          <Property Name="Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job_Employee">
+          <Key>
+            <PropertyRef Name="JobEmployeeID" />
+          </Key>
+          <Property Name="JobEmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobCardID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="varchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job_Material">
+          <Key>
+            <PropertyRef Name="JobMaterialID" />
+          </Key>
+          <Property Name="JobMaterialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobCardID" Type="int" Nullable="false" />
+          <Property Name="MaterialID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobType">
+          <Key>
+            <PropertyRef Name="JobTypeID" />
+          </Key>
+          <Property Name="JobTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="MaterialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Job__CustomerID__32E0915F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job__JobTypeID__33D4B598">
+          <End Role="JobType" Type="Self.JobType" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobType">
+              <PropertyRef Name="JobTypeID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="JobTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Emplo__Emplo__3B75D760">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Job_Employee" Type="Self.Job_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Job_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Emplo__JobCa__3A81B327">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Job_Employee" Type="Self.Job_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobCardID" />
+            </Principal>
+            <Dependent Role="Job_Employee">
+              <PropertyRef Name="JobCardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Mater__JobCa__36B12243">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Job_Material" Type="Self.Job_Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobCardID" />
+            </Principal>
+            <Dependent Role="Job_Material">
+              <PropertyRef Name="JobCardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Mater__Mater__37A5467C">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Job_Material" Type="Self.Job_Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="Job_Material">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Domingo_Roof_WorksModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job_Employee" EntityType="Self.Job_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job_Material" EntityType="Self.Job_Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobType" EntityType="Self.JobType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Job__CustomerID__32E0915F" Association="Self.FK__Job__CustomerID__32E0915F">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job__JobTypeID__33D4B598" Association="Self.FK__Job__JobTypeID__33D4B598">
+            <End Role="JobType" EntitySet="JobType" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Emplo__Emplo__3B75D760" Association="Self.FK__Job_Emplo__Emplo__3B75D760">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Job_Employee" EntitySet="Job_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Emplo__JobCa__3A81B327" Association="Self.FK__Job_Emplo__JobCa__3A81B327">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Job_Employee" EntitySet="Job_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Mater__JobCa__36B12243" Association="Self.FK__Job_Mater__JobCa__36B12243">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Job_Material" EntitySet="Job_Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Mater__Mater__37A5467C" Association="Self.FK__Job_Mater__Mater__37A5467C">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Job_Material" EntitySet="Job_Material" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Domingo_Roof_WorksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Jobs" Relationship="Self.FK__Job__CustomerID__32E0915F" FromRole="Customer" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Job_Employee" Relationship="Self.FK__Job_Emplo__Emplo__3B75D760" FromRole="Employee" ToRole="Job_Employee" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobCardID" />
+          </Key>
+          <Property Name="JobCardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="JobTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Days" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Job__CustomerID__32E0915F" FromRole="Job" ToRole="Customer" />
+          <NavigationProperty Name="JobType" Relationship="Self.FK__Job__JobTypeID__33D4B598" FromRole="Job" ToRole="JobType" />
+          <NavigationProperty Name="Job_Employee" Relationship="Self.FK__Job_Emplo__JobCa__3A81B327" FromRole="Job" ToRole="Job_Employee" />
+          <NavigationProperty Name="Job_Material" Relationship="Self.FK__Job_Mater__JobCa__36B12243" FromRole="Job" ToRole="Job_Material" />
+        </EntityType>
+        <EntityType Name="Job_Employee">
+          <Key>
+            <PropertyRef Name="JobEmployeeID" />
+          </Key>
+          <Property Name="JobEmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobCardID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Job_Emplo__Emplo__3B75D760" FromRole="Job_Employee" ToRole="Employee" />
+          <NavigationProperty Name="Job" Relationship="Self.FK__Job_Emplo__JobCa__3A81B327" FromRole="Job_Employee" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Job_Material">
+          <Key>
+            <PropertyRef Name="JobMaterialID" />
+          </Key>
+          <Property Name="JobMaterialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobCardID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Job" Relationship="Self.FK__Job_Mater__JobCa__36B12243" FromRole="Job_Material" ToRole="Job" />
+          <NavigationProperty Name="Material" Relationship="Self.FK__Job_Mater__Mater__37A5467C" FromRole="Job_Material" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="JobType">
+          <Key>
+            <PropertyRef Name="JobTypeID" />
+          </Key>
+          <Property Name="JobTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobType1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Jobs" Relationship="Self.FK__Job__JobTypeID__33D4B598" FromRole="JobType" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="MaterialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Job_Material" Relationship="Self.FK__Job_Mater__Mater__37A5467C" FromRole="Material" ToRole="Job_Material" />
+        </EntityType>
+        <Association Name="FK__Job__CustomerID__32E0915F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Emplo__Emplo__3B75D760">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Job_Employee" Type="Self.Job_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Job_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job__JobTypeID__33D4B598">
+          <End Role="JobType" Type="Self.JobType" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobType">
+              <PropertyRef Name="JobTypeID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="JobTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Emplo__JobCa__3A81B327">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Job_Employee" Type="Self.Job_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobCardID" />
+            </Principal>
+            <Dependent Role="Job_Employee">
+              <PropertyRef Name="JobCardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Mater__JobCa__36B12243">
+          <End Role="Job" Type="Self.Job" Multiplicity="1" />
+          <End Role="Job_Material" Type="Self.Job_Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobCardID" />
+            </Principal>
+            <Dependent Role="Job_Material">
+              <PropertyRef Name="JobCardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Mater__Mater__37A5467C">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Job_Material" Type="Self.Job_Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="Job_Material">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Domingo_Roof_WorksEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <EntitySet Name="Job_Employee" EntityType="Self.Job_Employee" />
+          <EntitySet Name="Job_Material" EntityType="Self.Job_Material" />
+          <EntitySet Name="JobTypes" EntityType="Self.JobType" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <AssociationSet Name="FK__Job__CustomerID__32E0915F" Association="Self.FK__Job__CustomerID__32E0915F">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Emplo__Emplo__3B75D760" Association="Self.FK__Job_Emplo__Emplo__3B75D760">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Job_Employee" EntitySet="Job_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job__JobTypeID__33D4B598" Association="Self.FK__Job__JobTypeID__33D4B598">
+            <End Role="JobType" EntitySet="JobTypes" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Emplo__JobCa__3A81B327" Association="Self.FK__Job_Emplo__JobCa__3A81B327">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Job_Employee" EntitySet="Job_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Mater__JobCa__36B12243" Association="Self.FK__Job_Mater__JobCa__36B12243">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Job_Material" EntitySet="Job_Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Mater__Mater__37A5467C" Association="Self.FK__Job_Mater__Mater__37A5467C">
+            <End Role="Material" EntitySet="Materials" />
+            <End Role="Job_Material" EntitySet="Job_Material" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Domingo_Roof_WorksModelStoreContainer" CdmEntityContainer="Domingo_Roof_WorksEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="JobCardID" ColumnName="JobCardID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job_Employee">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Job_Employee">
+              <MappingFragment StoreEntitySet="Job_Employee">
+                <ScalarProperty Name="JobEmployeeID" ColumnName="JobEmployeeID" />
+                <ScalarProperty Name="JobCardID" ColumnName="JobCardID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job_Material">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Job_Material">
+              <MappingFragment StoreEntitySet="Job_Material">
+                <ScalarProperty Name="JobMaterialID" ColumnName="JobMaterialID" />
+                <ScalarProperty Name="JobCardID" ColumnName="JobCardID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobTypes">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.JobType">
+              <MappingFragment StoreEntitySet="JobType">
+                <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+                <ScalarProperty Name="JobType1" ColumnName="JobType" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="Domingo_Roof_WorksModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

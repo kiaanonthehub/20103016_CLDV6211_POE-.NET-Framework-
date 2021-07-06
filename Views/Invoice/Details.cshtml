@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CLDV_Framework.Models.Invoice>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>Invoice</h1>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            Job Card No. :
+        </dt>
+        <dd>
+            @ViewBag.JobCardID
+        </dd>
+
+        <dt>
+            Customer Details :
+        </dt>
+        <dd>
+            @ViewBag.CustomerName, @ViewBag.Address
+        </dd>
+
+        <dt>
+            Job Type : 
+        </dt>
+        <dd>
+           @ViewBag.JobType
+        </dd>
+
+        <dt>
+            Employees Allocated : 
+        </dt>
+        <dd>
+
+            @foreach (var item in @ViewBag.Employees)
+            {
+                @item
+            }
+        </dd>
+
+        <dt>
+            Equiptment/Materials :
+        </dt>
+        <dd>
+            <br /> @foreach (var item in @ViewBag.Materials)
+            {
+                @item
+                <br />
+            }
+        </dd>
+
+        <dt>
+            Costs :
+        </dt>
+        <dd>
+            <br />
+            <TABLE CELLPADDING="2" CELLSPACING="2" WIDTH="100%">
+                <TR>
+                    <TD FGCOLOR="#CCCCCC">Job Type</TD>
+                    <TD FGCOLOR="#CCCCCC">Rate</TD>
+                    <TD FGCOLOR="#CCCCCC">No. of days</TD>
+                    <TD FGCOLOR="#CCCCCC">Subtotal</TD>
+                </TR>
+                <TR>
+                    <TD>@ViewBag.JobType </TD>
+                    <TD>@string.Format("R{0:0.00}", @ViewBag.Rate) </TD>
+                    <TD>@ViewBag.Days</TD>
+                    <TD>@string.Format("R{0:0.00}", @ViewBag.TotalExclVat)</TD>
+                </TR>
+                <TR>
+                    <TD><br /></TD>
+                    <TD><br /></TD>
+                    <TD><br /></TD>
+                    <TD>@string.Format("VAT @14%: R{0:0.00}", @ViewBag.VAT)</TD>
+                </TR>
+                <TR>
+                    <TD><br /></TD>
+                    <TD><br /></TD>
+                    <TD><br /></TD>
+                    <TD>@string.Format("Total: R{0:0.00}", @ViewBag.TotalInclVat)</TD>
+                </TR>
+            </TABLE>
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

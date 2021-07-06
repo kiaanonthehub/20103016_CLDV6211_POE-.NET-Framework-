@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="72131342523141e4a62a512bf0e29901" Name="Diagram1">
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Customer" Width="1.5" PointX="4.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Employee" Width="1.5" PointX="7.875" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Job" Width="1.5" PointX="4.875" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Job_Employee" Width="1.5" PointX="7.875" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Job_Material" Width="1.5" PointX="4.875" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.JobType" Width="1.5" PointX="0.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Domingo_Roof_WorksModel.Material" Width="1.5" PointX="2.5" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job__CustomerID__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job_Emplo__Emplo__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job__JobTypeID__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job_Emplo__JobCa__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job_Mater__JobCa__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="Domingo_Roof_WorksModel.FK__Job_Mater__Mater__37A5467C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
